@@ -14,7 +14,7 @@ c.execute('''CREATE TABLE aqi_cities ( Rank int primary key, City varchar(100), 
 csv_aqi_cities = pd.read_csv("Resources/AIR QUALITY INDEX (by cities) - IQAir.csv")
 csv_aqi_cities.to_sql("aqi_cities", conn, if_exists='append', index=False)
 
-c.execute('''CREATE TABLE aqi_countries ( Rank int primary key, [Country/Region] varchar(100), [2021] float, [2020] float, [2019] float, [2018] float, Population int)''')
+c.execute('''CREATE TABLE aqi_countries ( Rank int primary key, [Country_Region] varchar(100), [2021] float, [2020] float, [2019] float, [2018] float, Population int)''')
 csv_aqi_countries = pd.read_csv("Resources/AIR QUALITY INDEX- top countries.csv")
 csv_aqi_countries.to_sql("aqi_countries", conn, if_exists='append', index=False)
 
