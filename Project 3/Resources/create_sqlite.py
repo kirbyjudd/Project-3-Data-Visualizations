@@ -10,7 +10,7 @@ Path(database_path).touch()
 conn = sqlite3.connect(database_path)
 c = conn.cursor()
 
-c.execute('''CREATE TABLE openaq ( [Country Code] varchar(5), [City] varchar(100), [Location] varchar(100), [Coordinates] float, [Pollutant] varchar(10), [Source Name] varchar(10), [Unit] varchar(10), [Value] float, [Last Updated] datetime, [Country Label] varchar(50))''')
+c.execute('''CREATE TABLE openaq ( Id int primary key, [Country Code] varchar(5), [City] varchar(100), [Location] varchar(100), [Coordinates] float, [Pollutant] varchar(10), [Source Name] varchar(10), [Unit] varchar(10), [Value] float, [Last Updated] datetime, [Country Label] varchar(50))''')
 csv_openaq = pd.read_csv("Resources/openaq.csv")
 csv_openaq.to_sql("openaq", conn, if_exists='append', index=False)
 
