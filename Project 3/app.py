@@ -37,18 +37,18 @@ def welcome():
     return (
         f"Available Routes:<br/>"
         f"/api/v1.0/pollutants<br/>"
-        # f"/api/v1.0/countries"
+        f"/api/v1.0/data"
     )
 
 
-@app.route("/api/v1.0/pollutants")
+@app.route("/api/v1.0/locations")
 def cities():
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
     """Return a list of all city names"""
     # Query all pollutants
-    results = session.query(data).all()
+    results = session.query(data.City, data.Coordinates).all()
 
     session.close()
 
@@ -58,26 +58,30 @@ def cities():
     return jsonify(pollutant_names)
 
 
-# @app.route("/api/v1.0/countries")
-# def countries():
-#     # Create our session (link) from Python to the DB
-#     session = Session(engine)
+@app.route("/api/v1.0/data")
+def countries():
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
 
-#     """Return a list of country data including the name and population of each country"""
-#     # Query all countries
-#     results = session.query(Countries.Country_Region, Countries.Population).all()
+    """Return a list of country data including the name and population of each country"""
+    # Query all countries
+    results = session.query(data.City, data.Location, data.Coordinates, data.Pollutant, data.Unit, data.Value).all()
 
-#     session.close()
+    session.close()
 
-#     # Create a dictionary from the row data and append to a list of all_countries
-#     all_countries = []
-#     for Country_Region, Population in results:
-#         country_dict = {}
-#         country_dict["Country"] = Country_Region
-#         country_dict["Population"] = Population
-#         all_countries.append(country_dict)
+    # Create a dictionary from the row data and append to a list of all_countries
+    all_locations = []
+    for City, Location, Coordinates, Pollutant, Unit, Value in results:
+        location_dict = {}
+        location_dict["City"] = City
+        location_dict["Location"] = Location
+        location_dict["Coordinates"] = Coordinates
+        location_dict["Pollutant"] = Pollutant
+        location_dict["Unit"] = Unit
+        location_dict["Value"] = Value
+        all_locations.append(location_dict)
 
-#     return jsonify(all_countries)
+    return jsonify(all_locations)
 
 
 if __name__ == '__main__':
