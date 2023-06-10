@@ -8,3 +8,52 @@ body,
 html {
   height: 100%;
 }
+
+/* CSS from the leaflet-choropleth documentation */
+.legend {
+  color: #000000;
+  padding: 6px 8px;
+  font: 11px Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  background: white;
+  background: rgba(255,255,255,0.8);
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  border-radius: 5px;
+}
+
+.legend ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  clear: both;
+}
+
+.legend li {
+  display: inline-block;
+  width: 50px;
+  height: 22px;
+}
+
+.legend .min {
+  float: left;
+  margin-right: 5px;
+  padding-bottom: 5px;
+}
+
+.legend .mid1 {
+  float: left;
+  margin-left: 15px;
+}
+
+.legend .mid2 {
+  float: left;
+  margin-left: 15px;
+}
+
+.legend .max {
+  float: right;
+}
+
+h1 {
+  text-align: center;
+}

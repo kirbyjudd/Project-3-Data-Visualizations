@@ -122,6 +122,30 @@ d3.json(link).then(function(data) {
         }
     })
 
+    //Adding a legend
+    var legend = L.control({ position: 'bottomright' })
+    legend.onAdd = function (myMap) {
+      var div = L.DomUtil.create('div', 'info legend')
+      var limits = ["Good", "Moderate", "Poor", "Very Poor"];
+      var colors = ["green", "yellow", "orange", "red"];
+      var labels = []
+
+    // Add min & max
+    div.innerHTML = '<div class="labels"><div class="min">' + limits[0] + '</div> \
+			<div class="max">' + limits[3] + '</div> \
+            <div class="mid1">' + limits[1] + '</div> \
+            <div class="mid2">' + limits[2] + '</div></div>'
+
+    limits.forEach(function (limit, index) {
+      labels.push('<li style="background-color: ' + colors[index] + '"></li>')
+    })
+
+    div.innerHTML += '<ul>' + labels.join('') + '</ul>'
+    return div
+  }
+    
+    legend.addTo(myMap)
+
 // Create an overlays object to add to the layer control.
 var overlays = {
     "All data": mapdata,
