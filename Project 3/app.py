@@ -18,7 +18,7 @@ Base = automap_base()
 # reflect the tables
 Base.prepare(autoload_with=engine)
 
-# Save a reference to the cities table as `Cities` and countries table as `Countries`
+# Save a reference to the openaq table as `data`
 data = Base.classes.openaq
 
 #################################################
@@ -37,18 +37,19 @@ def welcome():
     return (
         f"Available Routes:<br/>"
         f"/api/v1.0/pollutants<br/>"
+        f"/api/v1.0/city-region<br/>"
         f"/api/v1.0/data"
     )
 
 
-@app.route("/api/v1.0/locations")
-def cities():
+@app.route("/api/v1.0/pollutants")
+def pollutants():
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
     """Return a list of all city names"""
-    # Query all pollutants
-    results = session.query(data.City, data.Coordinates).all()
+    # Query all distinct pollutants
+    results = session.query(data.Pollutant).distinct().all()
 
     session.close()
 
@@ -58,15 +59,32 @@ def cities():
     return jsonify(pollutant_names)
 
 
+@app.route("/api/v1.0/city-region")
+def city():
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a list of all city names"""
+    # Query all distinct pollutants
+    results = session.query(data.City).distinct().all()
+
+    session.close()
+
+    # Convert list of tuples into normal list
+    city_names = list(np.ravel(results))
+    
+    return jsonify(city_names)
+
+
 @app.route("/api/v1.0/data")
-def countries():
+def openaq():
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
     """Return a list of country data including the name and population of each country"""
     # Query all countries
     results = session.query(data.City, data.Location, data.Coordinates, data.Pollutant, data.Unit, data.Value).all()
-
+     
     session.close()
 
     # Create a dictionary from the row data and append to a list of all_countries
