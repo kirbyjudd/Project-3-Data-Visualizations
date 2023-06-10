@@ -13,7 +13,7 @@ html {
 .legend {
   color: #000000;
   padding: 6px 8px;
-  font: 11px Arial, Helvetica, sans-serif;
+  font: 10px Arial, Helvetica, sans-serif;
   font-weight: bold;
   background: white;
   background: rgba(255,255,255,0.8);
@@ -30,28 +30,40 @@ html {
 
 .legend li {
   display: inline-block;
-  width: 50px;
+  width: 60px;
   height: 22px;
 }
 
 .legend .min {
   float: left;
-  margin-right: 5px;
+  margin-left: 15px;
+  margin-right: 15px;
   padding-bottom: 5px;
 }
 
 .legend .mid1 {
   float: left;
-  margin-left: 15px;
+  margin-left: 5px;
 }
 
 .legend .mid2 {
   float: left;
-  margin-left: 15px;
+  margin-left: 10px;
+}
+
+.legend .mid3 {
+  float: left;
+  margin-left: 27px;
+}
+
+.legend .mid4 {
+  float: left;
+  margin-left: 25px;
 }
 
 .legend .max {
   float: right;
+  margin-right: 12px;
 }
 
 h1 {

@@ -8,6 +8,12 @@ var layers = {
     O3: new L.LayerGroup(),
     PM25: new L.LayerGroup(),
     PM10: new L.LayerGroup(),
+    Good: new L.LayerGroup(),
+    Satisfactory: new L.LayerGroup(),
+    Moderate: new L.LayerGroup(),
+    Poor: new L.LayerGroup(),
+    VeryPoor: new L.LayerGroup(),
+    Severe: new L.LayerGroup(),
   };
 
 // Create the map with our layers.
@@ -18,6 +24,7 @@ var myMap = L.map("map", {
       layers.O3,
       layers.PM25,
       layers.PM10,
+      layers.Severe,
     ]
   });
 
@@ -30,18 +37,24 @@ let link = "Resources/openaq.geojson";
 d3.json(link).then(function(data) {
 
     function circleColor(value, parameter) {
-        if (parameter === "O3" && value >= 0.097) return "red";
-        else if (parameter === "O3" && value >= 0.077 && value <= 0.097) return "orange";
-        else if (parameter === "O3" && value >= 0.061 && value <= 0.076) return "yellow";
-        else if (parameter === "O3" && value >= 0 && value <= 0.06) return "green";
-        else if (parameter === "PM2.5" && value >= 57) return "red";
-        else if (parameter === "PM2.5" && value >= 36 && value <= 57) return "orange";
-        else if (parameter === "PM2.5" && value >= 13 && value <= 35) return "yellow";
-        else if (parameter === "PM2.5" && value >= 0 && value <= 13) return "green";
-        else if (parameter === "PM10" && value >= 254) return "red";
-        else if (parameter === "PM10" && value >= 156 && value <= 254) return "orange";
-        else if (parameter === "PM10" && value >= 56 && value <= 154) return "yellow";
-        else if (parameter === "PM10" && value < 56) return "green";
+        if (parameter === "O3" && value > 0.117) return "purple";
+        else if (parameter === "O3" && value > .96 && value <= .117) return "red";
+        else if (parameter === "O3" && value > .076 && value <= .96) return "orange";
+        else if (parameter === "O3" && value > .06 && value <= .076) return "yellow";
+        else if (parameter === "O3" && value > .035 && value <= .06) return "lawngreen";
+        else if (parameter === "O3" && value >= 0 && value <= .035) return "green";
+        else if (parameter === "PM2.5" && value > 250) return "purple";
+        else if (parameter === "PM2.5" && value > 120 && value <= 249) return "red";
+        else if (parameter === "PM2.5" && value > 90 && value <= 120) return "orange";
+        else if (parameter === "PM2.5" && value > 60 && value <= 90) return "yellow";
+        else if (parameter === "PM2.5" && value > 30 && value <= 60) return "lawngreen";
+        else if (parameter === "PM2.5" && value > -16 && value <= 30) return "green";
+        else if (parameter === "PM10" && value > 430) return "purple";
+        else if (parameter === "PM10" && value > 350 && value <= 430) return "red";
+        else if (parameter === "PM10" && value > 250 && value <= 350) return "orange";
+        else if (parameter === "PM10" && value > 100 && value <= 250) return "yellow";
+        else if (parameter === "PM10" && value > 50 && value <= 100) return "lawngreen";
+        else if (parameter === "PM10" && value > -16 && value <= 50) return "green";
         else return "grey";
     }
 
@@ -55,6 +68,30 @@ d3.json(link).then(function(data) {
 
     function PM10Filter(feature) {
         if (feature.properties.measurements_parameter === "PM10") return true
+    }
+
+    function purpleFilter(feature) {
+        if (circleColor(feature.properties.measurements_value, feature.properties.measurements_parameter) == "purple") return true
+    }
+
+    function redFilter(feature) {
+        if (circleColor(feature.properties.measurements_value, feature.properties.measurements_parameter) == "red") return true
+    }
+
+    function orangeFilter(feature) {
+        if (circleColor(feature.properties.measurements_value, feature.properties.measurements_parameter) == "orange") return true
+    }
+
+    function yellowFilter(feature) {
+        if (circleColor(feature.properties.measurements_value, feature.properties.measurements_parameter) == "yellow") return true
+    }
+
+    function lawngreenFilter(feature) {
+        if (circleColor(feature.properties.measurements_value, feature.properties.measurements_parameter) == "lawngreen") return true
+    }
+
+    function greenFilter(feature) {
+        if (circleColor(feature.properties.measurements_value, feature.properties.measurements_parameter) == "green") return true
     }
     
     // Creating a GeoJSON layer with the retrieved data
@@ -122,19 +159,116 @@ d3.json(link).then(function(data) {
         }
     })
 
+    let purpleData = L.geoJson(data, {filter: purpleFilter,
+        pointToLayer: function (feature, location) {
+            return L.circleMarker(location, {
+                radius: 15,
+                color: "#000",
+                fillColor: circleColor(feature.properties.measurements_value, feature.properties.measurements_parameter),
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8
+            }).bindPopup(`<h1>${feature.properties.location}</h1> <h3>${feature.properties.city}</h3> <hr>
+            <h2>Pollutant: ${feature.properties.measurements_parameter} <br>
+            Value: ${feature.properties.measurements_value} ${feature.properties.measurements_unit} </h2>
+            <h3> Updated: ${feature.properties.measurements_lastupdated}</h3>`);
+        }
+    })
+
+    let redData = L.geoJson(data, {filter: redFilter,
+        pointToLayer: function (feature, location) {
+            return L.circleMarker(location, {
+                radius: 15,
+                color: "#000",
+                fillColor: circleColor(feature.properties.measurements_value, feature.properties.measurements_parameter),
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8
+            }).bindPopup(`<h1>${feature.properties.location}</h1> <h3>${feature.properties.city}</h3> <hr>
+            <h2>Pollutant: ${feature.properties.measurements_parameter} <br>
+            Value: ${feature.properties.measurements_value} ${feature.properties.measurements_unit} </h2>
+            <h3> Updated: ${feature.properties.measurements_lastupdated}</h3>`);
+        }
+    })
+
+    let orangeData = L.geoJson(data, {filter: orangeFilter,
+        pointToLayer: function (feature, location) {
+            return L.circleMarker(location, {
+                radius: 15,
+                color: "#000",
+                fillColor: circleColor(feature.properties.measurements_value, feature.properties.measurements_parameter),
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8
+            }).bindPopup(`<h1>${feature.properties.location}</h1> <h3>${feature.properties.city}</h3> <hr>
+            <h2>Pollutant: ${feature.properties.measurements_parameter} <br>
+            Value: ${feature.properties.measurements_value} ${feature.properties.measurements_unit} </h2>
+            <h3> Updated: ${feature.properties.measurements_lastupdated}</h3>`);
+        }
+    })
+
+    let yellowData = L.geoJson(data, {filter: yellowFilter,
+        pointToLayer: function (feature, location) {
+            return L.circleMarker(location, {
+                radius: 15,
+                color: "#000",
+                fillColor: circleColor(feature.properties.measurements_value, feature.properties.measurements_parameter),
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8
+            }).bindPopup(`<h1>${feature.properties.location}</h1> <h3>${feature.properties.city}</h3> <hr>
+            <h2>Pollutant: ${feature.properties.measurements_parameter} <br>
+            Value: ${feature.properties.measurements_value} ${feature.properties.measurements_unit} </h2>
+            <h3> Updated: ${feature.properties.measurements_lastupdated}</h3>`);
+        }
+    })
+
+    let lawngreenData = L.geoJson(data, {filter: lawngreenFilter,
+        pointToLayer: function (feature, location) {
+            return L.circleMarker(location, {
+                radius: 15,
+                color: "#000",
+                fillColor: circleColor(feature.properties.measurements_value, feature.properties.measurements_parameter),
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8
+            }).bindPopup(`<h1>${feature.properties.location}</h1> <h3>${feature.properties.city}</h3> <hr>
+            <h2>Pollutant: ${feature.properties.measurements_parameter} <br>
+            Value: ${feature.properties.measurements_value} ${feature.properties.measurements_unit} </h2>
+            <h3> Updated: ${feature.properties.measurements_lastupdated}</h3>`);
+        }
+    })
+
+    let greenData = L.geoJson(data, {filter: greenFilter,
+        pointToLayer: function (feature, location) {
+            return L.circleMarker(location, {
+                radius: 15,
+                color: "#000",
+                fillColor: circleColor(feature.properties.measurements_value, feature.properties.measurements_parameter),
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8
+            }).bindPopup(`<h1>${feature.properties.location}</h1> <h3>${feature.properties.city}</h3> <hr>
+            <h2>Pollutant: ${feature.properties.measurements_parameter} <br>
+            Value: ${feature.properties.measurements_value} ${feature.properties.measurements_unit} </h2>
+            <h3> Updated: ${feature.properties.measurements_lastupdated}</h3>`);
+        }
+    })
     //Adding a legend
     var legend = L.control({ position: 'bottomright' })
     legend.onAdd = function (myMap) {
       var div = L.DomUtil.create('div', 'info legend')
-      var limits = ["Good", "Moderate", "Poor", "Very Poor"];
-      var colors = ["green", "yellow", "orange", "red"];
+      var limits = ["Good", "Satisfactory", "Moderate", "Poor", "Very Poor", "Severe"];
+      var colors = ["green", "lawngreen", "yellow", "orange", "red", "purple"];
       var labels = []
 
     // Add min & max
     div.innerHTML = '<div class="labels"><div class="min">' + limits[0] + '</div> \
-			<div class="max">' + limits[3] + '</div> \
+			<div class="max">' + limits[5] + '</div> \
             <div class="mid1">' + limits[1] + '</div> \
-            <div class="mid2">' + limits[2] + '</div></div>'
+            <div class="mid2">' + limits[2] + '</div> \
+            <div class="mid3">' + limits[3] + '</div> \
+            <div class="mid4">' + limits[4] + '</div></div>'
 
     limits.forEach(function (limit, index) {
       labels.push('<li style="background-color: ' + colors[index] + '"></li>')
@@ -151,7 +285,14 @@ var overlays = {
     "All data": mapdata,
     "O3": O3mapdata,
     "PM2.5": PM25mapdata,
-    "PM10": PM10mapdata
+    "PM10": PM10mapdata,
+    "Severe": purpleData,
+    "Very Poor": redData,
+    "Poor": orangeData,
+    "Moderate": yellowData,
+    "Satisfactory": lawngreenData,
+    "Good": greenData,
+
   };
 
 // Create a control for our layers, and add our overlays to it.
