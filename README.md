@@ -46,7 +46,8 @@ Ground-level ozone or the “bad” ozone forms in the air we breathe. It is cre
 * Build safe and affordable public transport systems, and pedestrian and cycle-friendly networks.
 
 ![alt_text](https://github.com/kirbyjudd/Project-3-Data-Visualizations/blob/main/Images/Solutions.png)
-creator : Word Health Organization (WHO)
+
+source : Word Health Organization (WHO)
 
 ## Limitations to the Data Set
 
