@@ -298,3 +298,19 @@ var overlays = {
 // Create a control for our layers, and add our overlays to it.
 L.control.layers(null, overlays).addTo(myMap);
 });
+function init() {
+    // variable for selector  
+    let selector = d3.select("#selDataset");
+    
+    d3.json(url).then(function(data) {
+        let names = data;
+        // Adding all id #'s to dropdown  
+        names.forEach(element => {
+            // console.log(element.City);
+            selector.append("option").text(element.City).property("value");            
+        });
+        let idSelect = names[0];
+        // charts(idSelect);
+    });
+  };
+  init();
