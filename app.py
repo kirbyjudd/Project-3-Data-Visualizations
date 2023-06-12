@@ -42,6 +42,9 @@ def welcome():
         f"/api/v1.0/O3data<br/>"
         f"/api/v1.0/PM25data<br/>"
         f"/api/v1.0/PM10data<br/>"
+        f"/api/v1.0/O3regionAvg<br/>"
+        f"/api/v1.0/PM25regionAvg<br/>"
+        f"/api/v1.0/PM10regionAvg<br/>"
     )
 
 
@@ -178,6 +181,75 @@ def PM10():
         all_PM10.append(location_dict)
 
     return jsonify(all_PM10)
+
+@app.route("/api/v1.0/O3regionAvg")
+def O3regionAvg():
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a list of country data including the name and population of each country"""
+    # Query all countries
+    results = session.query(data.City, data.Pollutant, data.Unit, func.avg(data.Value)).group_by(data.City).filter(data.Pollutant == 'O3').all()
+     
+    session.close()
+
+    # Create a dictionary from the row data and append to a list of all_countries
+    all_O3regionAvg = []
+    for City, Pollutant, Unit, Value in results:
+        location_dict = {}
+        location_dict["City"] = City
+        location_dict["Pollutant"] = Pollutant
+        location_dict["Unit"] = Unit
+        location_dict["Value"] = Value
+        all_O3regionAvg.append(location_dict)
+
+    return jsonify(all_O3regionAvg)
+
+@app.route("/api/v1.0/PM25regionAvg")
+def PM25regionAvg():
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a list of country data including the name and population of each country"""
+    # Query all countries
+    results = session.query(data.City, data.Pollutant, data.Unit, func.avg(data.Value)).group_by(data.City).filter(data.Pollutant == 'PM2.5').all()
+     
+    session.close()
+
+    # Create a dictionary from the row data and append to a list of all_countries
+    all_PM25regionAvg = []
+    for City, Pollutant, Unit, Value in results:
+        location_dict = {}
+        location_dict["City"] = City
+        location_dict["Pollutant"] = Pollutant
+        location_dict["Unit"] = Unit
+        location_dict["Value"] = Value
+        all_PM25regionAvg.append(location_dict)
+
+    return jsonify(all_PM25regionAvg)
+
+@app.route("/api/v1.0/PM10regionAvg")
+def PM10regionAvg():
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a list of country data including the name and population of each country"""
+    # Query all countries
+    results = session.query(data.City, data.Pollutant, data.Unit, func.avg(data.Value)).group_by(data.City).filter(data.Pollutant == 'PM10').all()
+     
+    session.close()
+
+    # Create a dictionary from the row data and append to a list of all_countries
+    all_PM10regionAvg = []
+    for City, Pollutant, Unit, Value in results:
+        location_dict = {}
+        location_dict["City"] = City
+        location_dict["Pollutant"] = Pollutant
+        location_dict["Unit"] = Unit
+        location_dict["Value"] = Value
+        all_PM10regionAvg.append(location_dict)
+
+    return jsonify(all_PM10regionAvg)
 
 if __name__ == '__main__':
     app.run(debug=True)
