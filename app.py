@@ -129,7 +129,7 @@ def O3():
 
     return jsonify(all_O3)
 
-@app.route("/api/v1.0/PM2.5data")
+@app.route("/api/v1.0/PM25data")
 def PM25():
     # Create our session (link) from Python to the DB
     session = Session(engine)
