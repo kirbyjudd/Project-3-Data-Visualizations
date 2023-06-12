@@ -1,4 +1,5 @@
 // Set the url variable
+const city_region = "http://127.0.0.1:5000/api/v1.0/city-region";
 const url = "http://127.0.0.1:5000/api/v1.0/data";
 const O3url = "http://127.0.0.1:5000/api/v1.0/O3regionAvg";
 const PM25url = "http://127.0.0.1:5000/api/v1.0/PM25regionAvg";
