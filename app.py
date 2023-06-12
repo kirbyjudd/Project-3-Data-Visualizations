@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
@@ -6,6 +7,8 @@ from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 from flask_cors import CORS
 from flask import Flask, jsonify
+from itertools import groupby
+
 
 
 #################################################
@@ -45,6 +48,7 @@ def welcome():
         f"/api/v1.0/O3regionAvg<br/>"
         f"/api/v1.0/PM25regionAvg<br/>"
         f"/api/v1.0/PM10regionAvg<br/>"
+        f"/api/v1.0/regionAvg<br/>"
     )
 
 
@@ -250,6 +254,47 @@ def PM10regionAvg():
         all_PM10regionAvg.append(location_dict)
 
     return jsonify(all_PM10regionAvg)
+
+@app.route("/api/v1.0/regionAvg")
+def regionAvg():
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a list of country data including the name and population of each country"""
+    # Query all countries
+    results1 = session.query(data.City, data.Pollutant, data.Unit, func.avg(data.Value)).group_by(data.City).filter(data.Pollutant == 'O3').all()
+    results2 = session.query(data.City, data.Pollutant, data.Unit, func.avg(data.Value)).group_by(data.City).filter(data.Pollutant == 'PM2.5').all()
+    results3 = session.query(data.City, data.Pollutant, data.Unit, func.avg(data.Value)).group_by(data.City).filter(data.Pollutant == 'PM10').all()
+     
+    session.close()
+
+    # Create a dictionary from the row data and append to a list of all_countries
+    all_regionAvg = []
+    for City, Pollutant, Unit, Value in results1:
+        location_dict = {}
+        location_dict["City"] = City
+        location_dict["Pollutant"] = Pollutant
+        location_dict["Unit"] = Unit
+        location_dict["Value"] = Value
+        all_regionAvg.append(location_dict)
+
+    for City, Pollutant, Unit, Value in results2:
+        location_dict = {}
+        location_dict["City"] = City
+        location_dict["Pollutant"] = Pollutant
+        location_dict["Unit"] = Unit
+        location_dict["Value"] = Value
+        all_regionAvg.append(location_dict)
+
+    for City, Pollutant, Unit, Value in results3:
+        location_dict = {}
+        location_dict["City"] = City
+        location_dict["Pollutant"] = Pollutant
+        location_dict["Unit"] = Unit
+        location_dict["Value"] = Value
+        all_regionAvg.append(location_dict)
+        
+    return jsonify(all_regionAvg)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -20,6 +20,9 @@
   <!-- D3 library -->
   <script src="https://d3js.org/d3.v5.min.js"></script>
 
+  <!-- Chart.js library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
   <!-- Our CSS -->
   <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
@@ -39,6 +42,9 @@
           <h5>City :</h5>
           <select id="selDataset" onchange="optionChanged(this.value)"></select>
         </div>
+        <!-- Chart.js Charts -->
+        <div style="height: 500px; width: 1000px;"><canvas id="myChart"></canvas></div>
+        <div style="height: 500px; width: 1000px;"><canvas id="myChart2"></canvas></div>
         <div class="panel panel-primary">
           <div class="panel-heading">
             <h3 class="panel-title">Pollutant levels</h3>
