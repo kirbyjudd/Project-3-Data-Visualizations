@@ -48,7 +48,10 @@ def welcome():
         f"/api/v1.0/O3regionAvg<br/>"
         f"/api/v1.0/PM25regionAvg<br/>"
         f"/api/v1.0/PM10regionAvg<br/>"
-        f"/api/v1.0/regionAvg<br/>"
+        f"/api/v1.0/O3usAvg<br/>"
+        f"/api/v1.0/PM25usAvg<br/>"
+        f"/api/v1.0/PM10usAvg<br/>"
+        f"/api/v1.0/dropdown_region<br/>"
     )
 
 
@@ -255,46 +258,87 @@ def PM10regionAvg():
 
     return jsonify(all_PM10regionAvg)
 
-@app.route("/api/v1.0/regionAvg")
-def regionAvg():
+@app.route("/api/v1.0/O3usAvg")
+def O3usAvg():
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
     """Return a list of country data including the name and population of each country"""
     # Query all countries
-    results1 = session.query(data.City, data.Pollutant, data.Unit, func.avg(data.Value)).group_by(data.City).filter(data.Pollutant == 'O3').all()
-    results2 = session.query(data.City, data.Pollutant, data.Unit, func.avg(data.Value)).group_by(data.City).filter(data.Pollutant == 'PM2.5').all()
-    results3 = session.query(data.City, data.Pollutant, data.Unit, func.avg(data.Value)).group_by(data.City).filter(data.Pollutant == 'PM10').all()
-     
+    results = session.query(data.Pollutant, data.Unit, func.avg(data.Value)).filter(data.Pollutant == 'O3').all()
+
     session.close()
 
     # Create a dictionary from the row data and append to a list of all_countries
-    all_regionAvg = []
-    for City, Pollutant, Unit, Value in results1:
+    all_O3usAvg = []
+    for Pollutant, Unit, Value in results:
         location_dict = {}
-        location_dict["City"] = City
         location_dict["Pollutant"] = Pollutant
         location_dict["Unit"] = Unit
         location_dict["Value"] = Value
-        all_regionAvg.append(location_dict)
+        all_O3usAvg.append(location_dict)
+    
+    return jsonify(all_O3usAvg)
 
-    for City, Pollutant, Unit, Value in results2:
-        location_dict = {}
-        location_dict["City"] = City
-        location_dict["Pollutant"] = Pollutant
-        location_dict["Unit"] = Unit
-        location_dict["Value"] = Value
-        all_regionAvg.append(location_dict)
+@app.route("/api/v1.0/PM25usAvg")
+def PM25usAvg():
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
 
-    for City, Pollutant, Unit, Value in results3:
+    """Return a list of country data including the name and population of each country"""
+    # Query all countries
+    results = session.query(data.Pollutant, data.Unit, func.avg(data.Value)).filter(data.Pollutant == 'PM2.5').all()
+
+    session.close()
+
+    # Create a dictionary from the row data and append to a list of all_countries
+    all_PM25usAvg = []
+    for Pollutant, Unit, Value in results:
         location_dict = {}
-        location_dict["City"] = City
         location_dict["Pollutant"] = Pollutant
         location_dict["Unit"] = Unit
         location_dict["Value"] = Value
-        all_regionAvg.append(location_dict)
-        
-    return jsonify(all_regionAvg)
+        all_PM25usAvg.append(location_dict)
+    
+    return jsonify(all_PM25usAvg)
+
+@app.route("/api/v1.0/PM10usAvg")
+def PM10usAvg():
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a list of country data including the name and population of each country"""
+    # Query all countries
+    results = session.query(data.Pollutant, data.Unit, func.avg(data.Value)).filter(data.Pollutant == 'PM10').all()
+
+    session.close()
+
+    # Create a dictionary from the row data and append to a list of all_countries
+    all_PM10usAvg = []
+    for Pollutant, Unit, Value in results:
+        location_dict = {}
+        location_dict["Pollutant"] = Pollutant
+        location_dict["Unit"] = Unit
+        location_dict["Value"] = Value
+        all_PM10usAvg.append(location_dict)
+    
+    return jsonify(all_PM10usAvg)
+
+@app.route("/api/v1.0/dropdown_region")
+def dropdown_region():
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a list of all city names"""
+    # Query all distinct pollutants
+    results = session.query(data.City).distinct().order_by(data.City).filter(data.Pollutant == 'O3').all()
+
+    session.close()
+
+    # Convert list of tuples into normal list
+    dropdown_names = list(np.ravel(results))
+    
+    return jsonify(dropdown_names)
 
 if __name__ == '__main__':
     app.run(debug=True)
