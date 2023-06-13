@@ -38,7 +38,7 @@ Ground-level ozone or the “bad” ozone forms in the air we breathe. It is cre
 ## Analysis
 * The regions with the highest average amount of Moderate to Very Poor O3 air pollution was located in and around Wisconsin, Chicago and Michigan
 * Some of the lower O3 air polluted regions included the San Francisco/Sacramento region, and near the East and West Coast shorelines
-* Because PM2.5 and PM10 air pollution is more dynamic the O3, it should usually be in the satisfactory range unless there has been a recent forest fire or other event that would increase particles in the air
+* Because PM2.5 and PM10 air pollution is more dynamic than O3, it should usually be in the satisfactory range unless there has been a recent forest fire or other event that would increase particles in the air
 * The California forest areas had some of the higher PM2.5 readings which could be attributed to forest fires in the area when the air readings were taken
 ### [Link to the web page](https://kirbyjudd.github.io/Project-3-Data-Visualizations/)
 
