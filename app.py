@@ -195,8 +195,8 @@ def O3regionAvg():
     session = Session(engine)
 
     """Return a list of O3 data filtering for average value"""
-    # Query all data filtering for O3 only and grouping by city-region
-    results = session.query(data.City, data.Pollutant, data.Unit, func.avg(data.Value)).group_by(data.City).filter(data.Pollutant == 'O3').all()
+    # Query all data filtering for O3 only and grouping by city-region ordered by descending values
+    results = session.query(data.City, data.Pollutant, data.Unit, func.avg(data.Value)).group_by(data.City).order_by(func.avg(data.Value).desc()).filter(data.Pollutant == 'O3').all()
      
     session.close()
 
@@ -218,8 +218,8 @@ def PM25regionAvg():
     session = Session(engine)
 
     """Return a list of PM2.5 data filtering for average value"""
-    # Query all data filtering for PM2.5 only and grouping by city-region
-    results = session.query(data.City, data.Pollutant, data.Unit, func.avg(data.Value)).group_by(data.City).filter(data.Pollutant == 'PM2.5').all()
+    # Query all data filtering for PM2.5 only and grouping by city-region ordered by descending values
+    results = session.query(data.City, data.Pollutant, data.Unit, func.avg(data.Value)).group_by(data.City).order_by(func.avg(data.Value).desc()).filter(data.Pollutant == 'PM2.5').all()
      
     session.close()
 
@@ -241,8 +241,8 @@ def PM10regionAvg():
     session = Session(engine)
 
     """Return a list of PM10 data filtering for average value"""
-    # Query all data filtering for PM10 only and grouping by city-region
-    results = session.query(data.City, data.Pollutant, data.Unit, func.avg(data.Value)).group_by(data.City).filter(data.Pollutant == 'PM10').all()
+    # Query all data filtering for PM10 only and grouping by city-region ordered by descending values
+    results = session.query(data.City, data.Pollutant, data.Unit, func.avg(data.Value)).group_by(data.City).order_by(func.avg(data.Value).desc()).filter(data.Pollutant == 'PM10').all()
      
     session.close()
 
