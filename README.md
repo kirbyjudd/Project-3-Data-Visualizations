@@ -5,7 +5,7 @@
 The purpose of this report is to analyze the air pollution data collected from cities in the USA, specifically focusing on the levels of PM2.5, PM10, and O3. Air pollution has become a significant concern due to its adverse effects on human health and the environment. The analysis aims to provide insights into the air quality status, identify potential sources of pollution, and propose strategies to mitigate the problem. 
 The Air Quality Index (AQI) is a standardized measure used to assess and compare air pollution levels. It categorizes quality into specific ranges, from good to hazardous, providing an indication of the overall air quality.
 
-![alt_text](https://github.com/kirbyjudd/Project-3-Data-Visualizations/blob/main/Images/pm_levels.png)
+![alt_text](https://github.com/kirbyjudd/Project-3-Data-Visualizations/blob/main/Images/pm_levels_updated.png)
 
 ##  Key Pollutants
 
