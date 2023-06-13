@@ -27,7 +27,7 @@ let O3Chart;
 let PM25Chart;
 let PM10Chart;
     
-// Render the chart to the div tag with the id of "myChart".
+// Create barChart function to create the bar charts given the City id
 function barChart(id) {
   O3filteredAvg = O3regionAvg.filter(row => row.City == id);
   PM25filteredAvg = PM25regionAvg.filter(row => row.City == id);
@@ -36,7 +36,7 @@ function barChart(id) {
   PM25usfilteredAvg = PM25usAvg.filter(row => row.City == id);
   PM10usfilteredAvg = PM10usAvg.filter(row => row.City == id);
 
-  
+// If chart already exists, destroy to make room for new chart (chart.js)
 if (O3Chart){
   O3Chart.destroy();
 }
@@ -106,10 +106,12 @@ if (PM10Chart){
       }
     );
 }
+// Calls the barChart function to select dataset
 document.getElementById("selDataset").addEventListener("change", function () {barChart(document.getElementById("selDataset").value)});
 
 });
 
+// Selector when changing city-region in dashboard
 function init() {
   // variable for selector  
   let selector = d3.select("#selDataset");

@@ -78,7 +78,7 @@ def city():
     session = Session(engine)
 
     """Return a list of all city names"""
-    # Query all distinct pollutants
+    # Query all distinct city-regions
     results = session.query(data.City).distinct().all()
 
     session.close()
@@ -94,13 +94,13 @@ def openaq():
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
-    """Return a list of country data including the name and population of each country"""
-    # Query all countries
+    """Return a list of all database data"""
+    # Query all data
     results = session.query(data.City, data.Location, data.Coordinates, data.Pollutant, data.Unit, data.Value).all()
      
     session.close()
 
-    # Create a dictionary from the row data and append to a list of all_countries
+    # Create a dictionary from the row data and append to a list of all_locations
     all_locations = []
     for City, Location, Coordinates, Pollutant, Unit, Value in results:
         location_dict = {}
@@ -119,13 +119,13 @@ def O3():
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
-    """Return a list of country data including the name and population of each country"""
-    # Query all countries
+    """Return a list of O3 data"""
+    # Query all data filtering for O3 only
     results = session.query(data.City, data.Location, data.Coordinates, data.Pollutant, data.Unit, data.Value).filter(data.Pollutant == 'O3').all()
      
     session.close()
 
-    # Create a dictionary from the row data and append to a list of all_countries
+    # Create a dictionary from the row data and append to a list of all_O3
     all_O3 = []
     for City, Location, Coordinates, Pollutant, Unit, Value in results:
         location_dict = {}
@@ -144,13 +144,13 @@ def PM25():
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
-    """Return a list of country data including the name and population of each country"""
-    # Query all countries
+    """Return a list of PM2.5 data"""
+    # Query all data filtering for PM2.5 only
     results = session.query(data.City, data.Location, data.Coordinates, data.Pollutant, data.Unit, data.Value).filter(data.Pollutant == 'PM2.5').all()
      
     session.close()
 
-    # Create a dictionary from the row data and append to a list of all_countries
+    # Create a dictionary from the row data and append to a list of all_PM25
     all_PM25 = []
     for City, Location, Coordinates, Pollutant, Unit, Value in results:
         location_dict = {}
@@ -169,13 +169,13 @@ def PM10():
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
-    """Return a list of country data including the name and population of each country"""
-    # Query all countries
+    """Return a list of PM10 data"""
+    # Query all data filtering for PM10 only
     results = session.query(data.City, data.Location, data.Coordinates, data.Pollutant, data.Unit, data.Value).filter(data.Pollutant == 'PM10').all()
      
     session.close()
 
-    # Create a dictionary from the row data and append to a list of all_countries
+    # Create a dictionary from the row data and append to a list of all_PM10
     all_PM10 = []
     for City, Location, Coordinates, Pollutant, Unit, Value in results:
         location_dict = {}
@@ -194,13 +194,13 @@ def O3regionAvg():
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
-    """Return a list of country data including the name and population of each country"""
-    # Query all countries
+    """Return a list of O3 data filtering for average value"""
+    # Query all data filtering for O3 only and grouping by city-region
     results = session.query(data.City, data.Pollutant, data.Unit, func.avg(data.Value)).group_by(data.City).filter(data.Pollutant == 'O3').all()
      
     session.close()
 
-    # Create a dictionary from the row data and append to a list of all_countries
+    # Create a dictionary from the row data and append to a list of all_O3regionAvg
     all_O3regionAvg = []
     for City, Pollutant, Unit, Value in results:
         location_dict = {}
@@ -217,13 +217,13 @@ def PM25regionAvg():
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
-    """Return a list of country data including the name and population of each country"""
-    # Query all countries
+    """Return a list of PM2.5 data filtering for average value"""
+    # Query all data filtering for PM2.5 only and grouping by city-region
     results = session.query(data.City, data.Pollutant, data.Unit, func.avg(data.Value)).group_by(data.City).filter(data.Pollutant == 'PM2.5').all()
      
     session.close()
 
-    # Create a dictionary from the row data and append to a list of all_countries
+    # Create a dictionary from the row data and append to a list of all_PM2.5regionAvg
     all_PM25regionAvg = []
     for City, Pollutant, Unit, Value in results:
         location_dict = {}
@@ -240,13 +240,13 @@ def PM10regionAvg():
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
-    """Return a list of country data including the name and population of each country"""
-    # Query all countries
+    """Return a list of PM10 data filtering for average value"""
+    # Query all data filtering for PM10 only and grouping by city-region
     results = session.query(data.City, data.Pollutant, data.Unit, func.avg(data.Value)).group_by(data.City).filter(data.Pollutant == 'PM10').all()
      
     session.close()
 
-    # Create a dictionary from the row data and append to a list of all_countries
+    # Create a dictionary from the row data and append to a list of all_PM10regionAvg
     all_PM10regionAvg = []
     for City, Pollutant, Unit, Value in results:
         location_dict = {}
@@ -263,13 +263,13 @@ def O3usAvg():
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
-    """Return a list of country data including the name and population of each country"""
-    # Query all countries
+    """Return a list of O3 US average value"""
+    # Query data and find O3 US Avg
     results = session.query(data.Pollutant, data.Unit, func.avg(data.Value)).filter(data.Pollutant == 'O3').all()
 
     session.close()
 
-    # Create a dictionary from the row data and append to a list of all_countries
+    # Create a dictionary from the row data and append to a list of all_O3usAvg
     all_O3usAvg = []
     for Pollutant, Unit, Value in results:
         location_dict = {}
@@ -285,13 +285,13 @@ def PM25usAvg():
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
-    """Return a list of country data including the name and population of each country"""
-    # Query all countries
+    """Return a list of PM2.5 US average value"""
+    # Query data and find PM2.5 US Avg
     results = session.query(data.Pollutant, data.Unit, func.avg(data.Value)).filter(data.Pollutant == 'PM2.5').all()
 
     session.close()
 
-    # Create a dictionary from the row data and append to a list of all_countries
+    # Create a dictionary from the row data and append to a list of all_PM25usAvg
     all_PM25usAvg = []
     for Pollutant, Unit, Value in results:
         location_dict = {}
@@ -307,13 +307,13 @@ def PM10usAvg():
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
-    """Return a list of country data including the name and population of each country"""
-    # Query all countries
+    """Return a list of PM10 US average value"""
+    # Query data and find PM10 US Avg
     results = session.query(data.Pollutant, data.Unit, func.avg(data.Value)).filter(data.Pollutant == 'PM10').all()
 
     session.close()
 
-    # Create a dictionary from the row data and append to a list of all_countries
+    # Create a dictionary from the row data and append to a list of all_PM10usAvg
     all_PM10usAvg = []
     for Pollutant, Unit, Value in results:
         location_dict = {}
@@ -329,8 +329,8 @@ def dropdown_region():
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
-    """Return a list of all city names"""
-    # Query all distinct pollutants
+    """Return a list of all distinct city-region names for dropdown selector"""
+    # Query all distinct city-regions for dropdown selector
     results = session.query(data.City).distinct().order_by(data.City).filter(data.Pollutant == 'O3').all()
 
     session.close()
