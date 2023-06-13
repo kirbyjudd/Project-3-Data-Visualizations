@@ -33,7 +33,10 @@ Ground-level ozone or the “bad” ozone forms in the air we breathe. It is cre
 
 * ### Charts.js
 
+![alt_text](https://github.com/kirbyjudd/Project-3-Data-Visualizations/blob/main/Images/Charts.js.png)
+
 ## Analysis
+
 ### [Link to the web page](https://kirbyjudd.github.io/Project-3-Data-Visualizations/)
 
 ##  Solutions to tackle Air Pollution
