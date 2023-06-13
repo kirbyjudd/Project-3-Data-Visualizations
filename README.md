@@ -51,6 +51,13 @@ source : Word Health Organization (WHO)
 
 ## Limitations to the Data Set
 
+* **_Limited Pollutant Variables:_** The dataset focus on specific pollutants such as particulate matter(PM2.5 and PM10) and ozone(O3), while excluding other pollutants. Analysing a limited set of pollutants may not provide a comprehensive understanding of the overall air quality or the interactions between different pollutants, which could impact public health or environmental implications;
+
+* **_Seasonal Variations:_** The dataset covers data for only few months, which may not capture long-term variations of the pollutants values;
+
+* **_Monitoring Stations Distribution:_** The dataset has uneven distribution of monitoring stations across the study area. Some regions have more monitoring stations, and other are underrepresented. 
+
+
 ##  Data Source
 
 OpenAQ. (2023). Air Quality Data for USA Cities. Retrieved June 6, 2023 from https://docs.openaq.org/reference/latest_get_v2_latest_get
