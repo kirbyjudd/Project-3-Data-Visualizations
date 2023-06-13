@@ -67,7 +67,7 @@ source : Word Health Organization (WHO)
 ##  Data Source
 
 OpenAQ. (2023). Air Quality Data for USA Cities. Retrieved June 6, 2023 from https://docs.openaq.org/reference/latest_get_v2_latest_get
-
+https://public.opendatasoft.com/explore/dataset/openaq/table/?disjunctive.city&disjunctive.location&disjunctive.measurements_parameter&sort=measurements_lastupdated
 ## Team  
 
 Nema Aragones, Vincent DeScioli, Anita Gjurchinovska, Kirby Judd
